@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/19888-POWERPLAY.iml" filepath="$PROJECT_DIR$/.idea/modules/19888-POWERPLAY.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/19888-POWERPLAY.FtcRobotController.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.main.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/19888-POWERPLAY.TeamCode.unitTest.iml" />
+    </modules>
+  </component>
+</project>
