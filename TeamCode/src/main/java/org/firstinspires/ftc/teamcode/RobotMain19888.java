@@ -5,130 +5,153 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public abstract class RobotMain19888 extends LinearOpMode {
     final double DRIVE_FACTOR = 1.0;
+    final double TURN_FACTOR = 1.0;
+    final double STRAFE_FACTOR = 1.0;
 
-    protected DcMotor m1;
-    protected DcMotor m2;
-    protected DcMotor m3;
-    protected DcMotor m4;
+    protected DcMotor lf, lr, rf, rr;
+    protected DcMotor mid; //test chassis only
+
+    public int AutoDir[] = {1, 1, 1, 1};
 
     public void ROBOT_INITIALIZE() throws InterruptedException {
-        m1 = hardwareMap.dcMotor.get("motor1");
-        m2 = hardwareMap.dcMotor.get("motor2");
-        m3 = hardwareMap.dcMotor.get("motor3");
-        m4 = hardwareMap.dcMotor.get("motor4");
+        lf = hardwareMap.dcMotor.get("lf");
+        lr = hardwareMap.dcMotor.get("lr");
+        rf = hardwareMap.dcMotor.get("rf");
+        rr = hardwareMap.dcMotor.get("rr");
 
-        m1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        m2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        m3.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        m4.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        m1.setDirection(DcMotor.Direction.REVERSE);
-        m2.setDirection(DcMotor.Direction.REVERSE);
+        lf.setDirection(DcMotor.Direction.REVERSE);
+        lr.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public void MoveV(double inch, double power) {
+
+
+
+    /*============================Autonomous Code================================*/
+
+
+
+
+    public void MoveStraight(double inch, double power) {
+        for (int i = 0; i < 4; i++) {AutoDir[i] = 1;}
         int ticks = (int) (inch * DRIVE_FACTOR);
+        Move(ticks, power);
+    }
 
-        m1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        m3.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void Strafe(double inch, double power) {
+        AutoDir[0] = AutoDir[3] = -1;
+        int ticks = (int) (inch * STRAFE_FACTOR);
+        Move(ticks, power);
+    }
 
-        m1.setTargetPosition(m1.getCurrentPosition() - ticks);
-        m3.setTargetPosition(m3.getCurrentPosition() - ticks);
+    public void Turn(int degrees, double power) {
+        AutoDir[2] = AutoDir[3] = -1;
+        int ticks = (int) (degrees * TURN_FACTOR);
+        Move(ticks, power);
+    }
 
-        m1.setPower(power);
-        m3.setPower(power);
+    public void Move(int ticks, double power) {
 
-        m1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        m3.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        while (m1.isBusy() && m2.isBusy()) {
-            telemetry.addData("m1", -m1.getCurrentPosition());
-            telemetry.addData("m3", -m3.getCurrentPosition());
+        lf.setTargetPosition(lf.getCurrentPosition() - (ticks * AutoDir[0]));
+        lr.setTargetPosition(lr.getCurrentPosition() - (ticks * AutoDir[1]));
+        rf.setTargetPosition(rf.getCurrentPosition() - (ticks * AutoDir[2]));
+        rr.setTargetPosition(rr.getCurrentPosition() - (ticks * AutoDir[3]));
+
+        lf.setPower(power);
+        lr.setPower(power);
+        rf.setPower(power);
+        rr.setPower(power);
+
+        lf.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rf.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (lf.isBusy() && lr.isBusy() && rf.isBusy() && rr.isBusy()) {
+            telemetry.addData("lf", lf.getCurrentPosition());
+            telemetry.addData("lr", lr.getCurrentPosition());
+            telemetry.addData("rf", rf.getCurrentPosition());
+            telemetry.addData("rr", rr.getCurrentPosition());
             telemetry.update();
         }
 
         sleep(200);
     }
 
-    public void MoveH(double inch, double power) {
-        int ticks = (int) (inch * DRIVE_FACTOR);
 
-        m2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        m4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        m2.setTargetPosition(m1.getCurrentPosition() - ticks);
-        m4.setTargetPosition(m3.getCurrentPosition() - ticks);
 
-        m2.setPower(power);
-        m4.setPower(power);
+    /*============================TeleOp Code================================*/
 
-        m2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        m4.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while (m2.isBusy() && m4.isBusy()) {
-            telemetry.addData("m2", -m2.getCurrentPosition());
-            telemetry.addData("m4", -m4.getCurrentPosition());
-            telemetry.update();
-        }
 
-        sleep(200);
-    }
-
-    public void TeleMoveV() {
-        m1.setPower(gamepad1.left_stick_x);
-        m3.setPower(gamepad1.left_stick_x);
-    }
-
-    public void TeleMoveH() {
-        m1.setPower(-gamepad1.left_stick_y);
-        m3.setPower(-gamepad1.left_stick_y);
-    }
-
-    public void TeleTurn() {
-        m1.setPower(-gamepad1.right_stick_x);
-        m2.setPower(gamepad1.right_stick_x);
-        m3.setPower(gamepad1.right_stick_x);
-        m4.setPower(-gamepad1.right_stick_x);
-    }
-
-    /*--------------Code for mecanum wheel---------------
 
     public void TeleStraight() {
-        m1.setPower(gamepad2.left_stick_y);
-        m2.setPower(gamepad2.left_stick_y);
-        m3.setPower(gamepad2.left_stick_y);
-        m4.setPower(gamepad2.left_stick_y);
+        if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
+            lf.setPower(-gamepad1.left_stick_y);
+            lr.setPower(-gamepad1.left_stick_y);
+            rf.setPower(-gamepad1.left_stick_y);
+            rr.setPower(-gamepad1.left_stick_y);
+        }
     }
 
     public void TeleStrafe() {
-        m1.setPower(gamepad2.left_stick_x);
-        m2.setPower(gamepad2.left_stick_x);
-        m3.setPower(-gamepad2.left_stick_x);
-        m4.setPower(-gamepad1.left_stick_x);
-    }
-
-    public void TeleDiagonal() {
-        double x = gamepad2.right_stick_x, y = gamepad2.right_stick_y;
-        if (x < 0) {
-            m2.setPower(y);
-            m4.setPower(y);
-        }else {
-            m1.setPower(y);
-            m3.setPower(y);
+        if (gamepad1.left_stick_x > 0.25 || gamepad1.left_stick_x < -0.25) {
+            lf.setPower(gamepad1.left_stick_x);
+            lr.setPower(-gamepad1.left_stick_x);
+            rf.setPower(-gamepad1.left_stick_x);
+            rr.setPower(gamepad1.left_stick_x);
         }
     }
 
     public void TeleTurn() {
-        int dir = 0;
-        if (gamepad2.dpad_right) dir = 1;
-        if (gamepad2.dpad_left) dir = -1;
-        m1.setPower(0.8 * dir);
-        m2.setPower(0.8 * dir);
-        m3.setPower(-0.8 * dir);
-        m4.setPower(-0.8 * dir);
+        lf.setPower(gamepad1.right_stick_x);
+        lr.setPower(gamepad1.right_stick_x);
+        rf.setPower(-gamepad1.right_stick_x);
+        rr.setPower(-gamepad1.right_stick_x);
     }
 
-    */
+//    public void TeleDiagonal() {
+//        double x = gamepad1.right_stick_x, y = -gamepad1.right_stick_y;
+//        if (x < 0) {
+//            lr.setPower(y);
+//            rf.setPower(y);
+//        }else {
+//            lf.setPower(y);
+//            rr.setPower(y);
+//        }
+//    }
+
+
+
+    /*================TeleOp code for test chassis (omni wheels)================*/
+
+
+
+    public void TestStraight() {
+        lf.setPower(-gamepad1.left_stick_y);
+        lr.setPower(-gamepad1.left_stick_y);
+        rf.setPower(-gamepad1.left_stick_y);
+        rr.setPower(-gamepad1.left_stick_y);
+    }
+
+    public void TestStrafe() {
+        mid.setPower(gamepad1.left_stick_x);
+    }
+
+    public void TestTurn() {
+        lr.setPower(gamepad1.right_stick_x);;
+        rr.setPower(-gamepad1.right_stick_x);
+    }
 
 
 }
