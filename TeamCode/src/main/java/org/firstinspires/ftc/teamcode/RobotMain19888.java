@@ -138,19 +138,21 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
 
     public void TestStraight() {
-        lf.setPower(-gamepad1.left_stick_y);
-//        lr.setPower(-gamepad1.left_stick_y);
-        rf.setPower(-gamepad1.left_stick_y);
-//        rr.setPower(-gamepad1.left_stick_y);
+        if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
+            lr.setPower(-gamepad1.left_stick_y);
+            rr.setPower(gamepad1.left_stick_y);
+        }
     }
 
     public void TestStrafe() {
-        mid.setPower(gamepad1.left_stick_x);
+        if (gamepad1.left_stick_x > 0.25 || gamepad1.left_stick_x < -0.25) {
+            mid.setPower(-gamepad1.left_stick_x);
+        }
     }
 
     public void TestTurn() {
         lr.setPower(gamepad1.right_stick_x);;
-        rr.setPower(-gamepad1.right_stick_x);
+        rr.setPower(gamepad1.right_stick_x);
     }
 
 
