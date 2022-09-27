@@ -9,22 +9,23 @@ public abstract class RobotMain19888 extends LinearOpMode {
     final double STRAFE_FACTOR = 1.0;
 
     protected DcMotor lf, lr, rf, rr;
+
     protected DcMotor mid; //test chassis only
 
     public int AutoDir[] = {1, 1, 1, 1};
 
     public void ROBOT_INITIALIZE() throws InterruptedException {
-        lf = hardwareMap.dcMotor.get("lf");
+        //lf = hardwareMap.dcMotor.get("lf");
         lr = hardwareMap.dcMotor.get("lr");
         rf = hardwareMap.dcMotor.get("rf");
         rr = hardwareMap.dcMotor.get("rr");
 
-        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        lf.setDirection(DcMotor.Direction.REVERSE);
+        //lf.setDirection(DcMotor.Direction.REVERSE);
         lr.setDirection(DcMotor.Direction.REVERSE);
     }
 
@@ -137,22 +138,30 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
 
 
-    public void TestStraight() {
+    public boolean TestStraight() {
         if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
             lr.setPower(-gamepad1.left_stick_y);
             rr.setPower(gamepad1.left_stick_y);
+            return true;
         }
+        return false;
     }
 
-    public void TestStrafe() {
+    public boolean TestStrafe() {
         if (gamepad1.left_stick_x > 0.25 || gamepad1.left_stick_x < -0.25) {
             mid.setPower(-gamepad1.left_stick_x);
+            return true;
         }
+        return false;
     }
 
-    public void TestTurn() {
-        lr.setPower(gamepad1.right_stick_x);;
-        rr.setPower(gamepad1.right_stick_x);
+    public boolean TestTurn() {
+        if (-0.1 < gamepad1.right_stick_x && gamepad1.right_stick_x < 0.1) {
+            lr.setPower(gamepad1.right_stick_x);;
+            rr.setPower(gamepad1.right_stick_x);
+            return true;
+        }
+        return false;
     }
 
 
