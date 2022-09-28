@@ -18,9 +18,10 @@ public class TestTele19888 extends RobotMain19888{
         mid.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         while (opModeIsActive()) {
-            if (!TestStraight() && !TestStrafe()) {
+            if (!TestStraight()) {
                 TestTurn();
             }
+            TestStrafe();
 
             telemetry.addData("L Joystick x", gamepad1.left_stick_x);
             telemetry.addData("L Joystick y", gamepad1.left_stick_y);
