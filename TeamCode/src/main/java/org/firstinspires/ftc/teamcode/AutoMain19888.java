@@ -28,6 +28,9 @@ public class AutoMain19888 extends RobotMain19888 {
             telemetry.addData("Program Started", null);
             telemetry.update();
 
+            MoveStraight(3,0.8);
+            Strafe(3,0.8);
+
             done = true;
         }
     }
