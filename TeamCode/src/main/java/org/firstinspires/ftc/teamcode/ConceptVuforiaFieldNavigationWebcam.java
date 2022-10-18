@@ -77,7 +77,7 @@ import java.util.List;
 
 @TeleOp(name="Vuforia Field Nav Webcam", group ="Concept")
 
-public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode  {
+public class ConceptVuforiaFieldNavigationWebcam extends TestTele19888 {
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -265,7 +265,7 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode  {
      * @param dx, dy, dz  Target offsets in x,y,z axes
      * @param rx, ry, rz  Target rotations in x,y,z axes
      */
-    void identifyTarget(int targetIndex, String targetName, float dx, float dy, float dz, float rx, float ry, float rz) {
+    void    identifyTarget(int targetIndex, String targetName, float dx, float dy, float dz, float rx, float ry, float rz) {
         VuforiaTrackable aTarget = targets.get(targetIndex);
         aTarget.setName(targetName);
         aTarget.setLocation(OpenGLMatrix.translation(dx, dy, dz)
