@@ -50,11 +50,7 @@ public abstract class RobotMain19888 extends LinearOpMode {
         Move(ticks, power);
     }
 
-    public void Turn(int degrees, double power) {
-        AutoDir[2] = AutoDir[3] = -1;
-        int ticks = (int) (degrees * TURN_FACTOR);
-        Move(ticks, power);
-    }
+
 
     public void Move(int ticks, double power) {
 
@@ -89,27 +85,38 @@ public abstract class RobotMain19888 extends LinearOpMode {
         sleep(200);
     }
 
-
+    public void Turn(int degrees, double power) {
+        AutoDir[2] = AutoDir[3] = -1;
+        int ticks = (int) (degrees * TURN_FACTOR);
+        Move(ticks, power);
+    }
 
 
     /*============================TeleOp Code================================*/
 
 
-
+    public double powerfactor(){
+        if (gamepad1.left_bumper){
+            return 1;
+        }
+        else{
+            return 0.5;
+        }
+    }
 
     public boolean TeleStraight() {
         if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
-            lf.setPower(-gamepad1.left_stick_y);
-            lr.setPower(-gamepad1.left_stick_y);
-            rf.setPower(-gamepad1.left_stick_y);
-            rr.setPower(-gamepad1.left_stick_y);
+            double power = gamepad1.left_stick_y * powerfactor()
+            lf.setPower(-power);
+            lr.setPower(-power);
+            rf.setPower(-power);
+            rr.setPower(-power);
             return true;
         }
         return false;
     }
-
     public void TeleStrafe() {
-        if (gamepad1.left_stick_x > 0.25 || gamepad1.left_stick_x < -0.25) {
+        if (gamepad1.right_stick_x > 0.25 || gamepad1.right_stick_x < -0.25) {
             mid.setPower(gamepad1.left_stick_x);
         }else {
             mid.setPower(0);
