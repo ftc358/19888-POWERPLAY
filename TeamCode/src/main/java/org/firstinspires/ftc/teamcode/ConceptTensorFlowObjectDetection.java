@@ -62,40 +62,16 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
      * has been downloaded to the Robot Controller's SD FLASH memory, it must to be loaded using loadModelFromFile()
      * Here we assume it's an Asset.    Also see method initTfod() below .
      */
-    private static final String TFOD_MODEL_ASSET = "moosgoosfish640fpn.tflite";
-    // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
-
+    private static final String TFOD_MODEL_ASSET = "Powerplay.tflite";
     private static final String[] LABELS = {
             "3 Fish",
       "2 Goos",
       "1 Moos"
     };
 
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
     private static final String VUFORIA_KEY =
             "AbZ0zWr/////AAABmegucpo600ErmcFxS2aMV7ptSyA1P8gCOnTDvfVMpi0RFTfURYcJzuV7KWLt9LtuufUk0Nuk9W+/mx1ar+uXasAMxVJqPm2YAFUnSHNznxPO7unScJ8RsyTk6M3FPp4ppyWVMHcZFdZoLDDko9RfKgqwZkYetEI/zrrOee/DtBSnendvlndPvrUiUXGqrLa/7hUPOoqyt/yB9bx9sbLyh+R71Atc6BbyJ5Dfjf/jf88cCreydDo5c9iQWeNoRH5R83uOx0eaw5ZihYAWMBveK7pYaYDgcbFyEQqhMj7K5agOgQN3/0gpBWfjmEkEdR+2iUoQGkwoxr5jEUdbq8iUwHZ2br+a3wYknQcnopwfg1jD";
-
-    /**
-     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
-     * localization engine.
-     */
     private VuforiaLocalizer vuforia;
-
-    /**
-     * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
-     * Detection engine.
-     */
     private TFObjectDetector tfod;
 
     @Override

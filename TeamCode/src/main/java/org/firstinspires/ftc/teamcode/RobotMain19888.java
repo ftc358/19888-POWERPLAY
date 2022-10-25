@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 public abstract class RobotMain19888 extends LinearOpMode {
-    final double DRIVE_FACTOR = 1.0;
-    final double TURN_FACTOR = 1.0;
+    final double DRIVE_FACTOR = 1000.0 / 19.0; //19 inches = 1000 ticks
+    final double TURN_FACTOR = 950.0 / 180.0; //180 degrees = 950 ticks
     final double STRAFE_FACTOR = 1.0;
 
     protected DcMotor lf, lr, rf, rr;
@@ -39,14 +39,35 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
 
     public void MoveStraight(double inch, double power) {
-        for (int i = 0; i < 4; i++) {AutoDir[i] = 1;}
+        for (int i = 0; i < 4; i++) {AutoDir[i] = -1;}
         int ticks = (int) (inch * DRIVE_FACTOR);
         Move(ticks, power);
     }
 
     public void Strafe(double inch, double power) {
-        AutoDir[0] = AutoDir[3] = -1;
+
         int ticks = (int) (inch * STRAFE_FACTOR);
+
+        mid.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        mid.setTargetPosition(mid.getCurrentPosition() - ticks);
+
+        mid.setPower(power);
+
+        mid.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (mid.isBusy()) {
+            telemetry.addData("mid", mid.getCurrentPosition());
+            telemetry.update();
+        }
+
+        sleep(200);
+    }
+
+    public void Turn(int degrees, double power) {
+        AutoDir[2] = AutoDir[3] = -1;
+        AutoDir[0] = AutoDir[1] =  1;
+        int ticks = (int) (degrees * TURN_FACTOR);
         Move(ticks, power);
     }
 
@@ -85,12 +106,6 @@ public abstract class RobotMain19888 extends LinearOpMode {
         sleep(200);
     }
 
-    public void Turn(int degrees, double power) {
-        AutoDir[2] = AutoDir[3] = -1;
-        int ticks = (int) (degrees * TURN_FACTOR);
-        Move(ticks, power);
-    }
-
 
     /*============================TeleOp Code================================*/
 
@@ -106,7 +121,7 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
     public boolean TeleStraight() {
         if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
-            double power = gamepad1.left_stick_y * powerfactor()
+            double power = gamepad1.left_stick_y * powerfactor();
             lf.setPower(-power);
             lr.setPower(-power);
             rf.setPower(-power);
@@ -117,17 +132,19 @@ public abstract class RobotMain19888 extends LinearOpMode {
     }
     public void TeleStrafe() {
         if (gamepad1.right_stick_x > 0.25 || gamepad1.right_stick_x < -0.25) {
-            mid.setPower(gamepad1.left_stick_x);
-        }else {
+            mid.setPower(gamepad1.right_stick_x);
+        }
+        else {
             mid.setPower(0);
         }
     }
 
     public void TeleTurn() {
-        lf.setPower(gamepad1.right_stick_x);
-        lr.setPower(gamepad1.right_stick_x);
-        rf.setPower(-gamepad1.right_stick_x);
-        rr.setPower(-gamepad1.right_stick_x);
+        double power = gamepad1.left_stick_x * powerfactor();
+        lf.setPower(power);
+        lr.setPower(power);
+        rf.setPower(-power);
+        rr.setPower(-power);
     }
 
 //    public void TeleDiagonal() {

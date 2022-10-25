@@ -29,6 +29,7 @@ public class AutoMain19888 extends RobotMain19888 {
             telemetry.update();
 
 
+            //TODO detect first
 
 
 
