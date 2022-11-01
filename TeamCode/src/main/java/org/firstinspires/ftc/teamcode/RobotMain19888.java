@@ -65,6 +65,7 @@ public abstract class RobotMain19888 extends LinearOpMode {
     }
 
     public void Turn(int degrees, double power) {
+        //turning left is positive degrees
         AutoDir[2] = AutoDir[3] = -1;
         AutoDir[0] = AutoDir[1] =  1;
         int ticks = (int) (degrees * TURN_FACTOR);
