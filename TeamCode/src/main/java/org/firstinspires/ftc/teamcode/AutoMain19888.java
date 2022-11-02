@@ -76,7 +76,6 @@ public class AutoMain19888 extends RobotMain19888 {
             Turn(135,1);
             MoveStraight(20,1);
             Turn(-90,1);
-
             done = true;
         }
     }

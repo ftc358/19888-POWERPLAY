@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public abstract class RobotMain19888 extends LinearOpMode {
     final double DRIVE_FACTOR = 1000.0 / 19.0; //19 inches = 1000 ticks
@@ -10,6 +11,9 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
     protected DcMotor lf, lr, rf, rr;
     protected DcMotor mid;
+    protected DcMotor slideLeft, slideRight;
+    protected Servo leftHand = null;
+    protected Servo rightHand = null;
 
     public int AutoDir[] = {1, 1, 1, 1};
 
@@ -20,14 +24,30 @@ public abstract class RobotMain19888 extends LinearOpMode {
         rr = hardwareMap.dcMotor.get("rr");
         mid = hardwareMap.dcMotor.get("mid");
 
+        slideLeft = hardwareMap.dcMotor.get("leftSlide");
+        slideRight = hardwareMap.dcMotor.get("rightSlide");
+        leftHand = hardwareMap.get(Servo.class, "left_hand");
+        rightHand = hardwareMap.get(Servo.class, "right_hand");
+
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         mid.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lf.setDirection(DcMotor.Direction.REVERSE);
         lr.setDirection(DcMotor.Direction.REVERSE);
+        slideRight.setDirection(DcMotor.Direction.REVERSE);
+
+        leftHand.setPosition(0.5);
+        rightHand.setPosition(0.5);
+
+
+
+
+
     }
 
 
@@ -105,6 +125,22 @@ public abstract class RobotMain19888 extends LinearOpMode {
         }
 
         sleep(200);
+    }
+
+    public void SlideOP(int direction, double power){
+        int ticks = 69 * direction;
+        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        slideLeft.setTargetPosition(slideLeft.getCurrentPosition()-(ticks));
+        slideRight.setTargetPosition(slideRight.getCurrentPosition()-(ticks));
+        slideLeft.setPower(power);
+        slideRight.setPower(power);
+        while (slideLeft.isBusy() && slideRight.isBusy()) {
+            telemetry.addData("slideLeft", slideLeft.getCurrentPosition());
+            telemetry.addData("slideRight", slideRight.getCurrentPosition());
+            telemetry.update();
+        }
     }
 
 
