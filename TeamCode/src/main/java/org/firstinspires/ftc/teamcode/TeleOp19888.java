@@ -28,6 +28,7 @@ public class TeleOp19888 extends RobotMain19888 {
                 TeleTurn();
             }
             TeleStrafe();
+            TeleSlide();
 
             telemetry.addData("L Joystick x", gamepad1.left_stick_x);
             telemetry.addData("L Joystick y", gamepad1.left_stick_y);

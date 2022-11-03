@@ -41,8 +41,8 @@ public abstract class RobotMain19888 extends LinearOpMode {
         lr.setDirection(DcMotor.Direction.REVERSE);
         slideRight.setDirection(DcMotor.Direction.REVERSE);
 
-        leftHand.setPosition(0.5);
-        rightHand.setPosition(0.5);
+        leftHand.setPosition(0);
+        rightHand.setPosition(0);
 
 
 
@@ -182,6 +182,28 @@ public abstract class RobotMain19888 extends LinearOpMode {
         lr.setPower(power);
         rf.setPower(-power);
         rr.setPower(-power);
+    }
+
+    public void TeleSlide() {
+        if (gamepad1.right_bumper) {
+            slideLeft.setPower(1);
+            slideRight.setPower(1);
+        }
+        if (gamepad1.a){
+            slideLeft.setPower(-1);
+            slideRight.setPower(-1);
+
+        }
+        else{
+            slideLeft.setPower(0);
+            slideRight.setPower(0);
+        }
+    }
+
+    public void TeleClaw() {}
+        if (gamepad1.x) {
+
+
     }
 
 //    public void TeleDiagonal() {
