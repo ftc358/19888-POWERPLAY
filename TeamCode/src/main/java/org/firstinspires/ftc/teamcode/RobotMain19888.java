@@ -201,10 +201,6 @@ public abstract class RobotMain19888 extends LinearOpMode {
     }
 
     public void TeleClaw() {}
-        if (gamepad1.x) {
-
-
-    }
 
 //    public void TeleDiagonal() {
 //        double x = gamepad1.right_stick_x, y = -gamepad1.right_stick_y;

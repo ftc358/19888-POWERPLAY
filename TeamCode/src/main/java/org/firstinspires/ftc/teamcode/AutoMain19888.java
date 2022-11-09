@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-
+import java.lang.Thread;
 /*
 
 This is the code for the Autonomous Period
@@ -49,9 +49,21 @@ public class AutoMain19888 extends RobotMain19888 {
             @Override
             public void onError(int errorCode) {}
         });
-
+        int park_ = 0;
         while (!isStarted()) {
-            telemetry.addData("ROTATION: ", sleeveDetection.getPosition());
+            SleeveDetection.ParkingPosition parking_=sleeveDetection.getPosition();
+            telemetry.addData("ROTATION: ", parking_);
+            switch(parking_) {
+                case LEFT:
+                    park_=1;
+                    break;
+                case CENTER:
+                    park_=2;
+                    break;
+                case RIGHT:
+                    park_=3;
+                    break;
+            }
             telemetry.update();
         }
 
@@ -62,20 +74,53 @@ public class AutoMain19888 extends RobotMain19888 {
         while (opModeIsActive() && !done) {
             telemetry.addData("Program Started", null);
             telemetry.update();
-
+            double power_value=0.3;
             //Drive
-            MoveStraight(6,1);
-            Turn(-90,1);
-            MoveStraight(24,1);
-            Turn(90,1);
-            MoveStraight(26,1);
-            Turn(-45,1);
-            MoveStraight(17,1);
+            MoveStraight(6,power_value);
+            Thread.sleep(500);
+            Turn(-90,power_value);
+            MoveStraight(23,power_value);
+            Turn(90,power_value);
+            MoveStraight(21,power_value);
+            Turn(-45,power_value);
+            MoveStraight(8,power_value);
             //Place First Cone
-            MoveStraight(-16,1);
-            Turn(135,1);
-            MoveStraight(20,1);
-            Turn(-90,1);
+            MoveStraight(-12,power_value);
+            Thread.sleep(500);
+            Turn(45,power_value);
+            MoveStraight(28,power_value);
+            Turn(88,power_value);
+            MoveStraight(55,power_value);
+            //pick up second cone
+            MoveStraight(-53,power_value);
+            Thread.sleep(500);
+            Turn(-43,power_value);
+            MoveStraight(6,power_value);
+            Thread.sleep(500);
+            //place the second coneiuk
+            MoveStraight(-6,power_value);
+            Thread.sleep(500);
+            Turn(43,power_value);
+            MoveStraight(55,power_value);
+            //pick up the third cone
+            Thread.sleep(500);
+            MoveStraight(-53,power_value);
+            Thread.sleep(500);
+            Turn(-43,power_value);
+            MoveStraight(6,power_value);
+            //place the third cone
+            MoveStraight(-6,power_value);
+            Thread.sleep(500);
+            Turn(43,power_value);
+            if(park_==1) {
+                MoveStraight(50,power_value);
+            }
+            if(park_==2) {
+                MoveStraight(23,power_value);
+            }
+            if(park_==3) {
+                MoveStraight(-2,power_value);
+            }
             done = true;
         }
     }
