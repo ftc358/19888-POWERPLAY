@@ -41,8 +41,8 @@ public abstract class RobotMain19888 extends LinearOpMode {
         lr.setDirection(DcMotor.Direction.REVERSE);
         slideRight.setDirection(DcMotor.Direction.REVERSE);
 
-        leftHand.setPosition(0);
-        rightHand.setPosition(0);
+//        leftHand.setPosition(0);
+//        rightHand.setPosition(0);
 
 
 
@@ -158,11 +158,28 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
     public boolean TeleStraight() {
         if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
-            double power = gamepad1.left_stick_y * powerfactor();
-            lf.setPower(-power);
-            lr.setPower(-power);
-            rf.setPower(-power);
-            rr.setPower(-power);
+            //right now left stick x = 0
+            //if it wants to turn left it will become -1
+            //right, +1
+            double leftWheels, rightWheels;
+
+            if (gamepad1.left_stick_x<-0.1){
+                leftWheels = gamepad1.left_stick_y * (1+gamepad1.left_stick_x);
+                rightWheels = (gamepad1.left_stick_y);
+            }//for left turns
+            else if (gamepad1.left_stick_x>0.1){
+                leftWheels = (gamepad1.left_stick_y);
+                rightWheels = gamepad1.left_stick_y * (1-gamepad1.left_stick_x);
+            }//for right turns
+            else{
+                leftWheels = (gamepad1.left_stick_y);
+                rightWheels = (gamepad1.left_stick_y);
+            }
+
+            lf.setPower(-leftWheels*powerfactor());
+            lr.setPower(-leftWheels*powerfactor());
+            rf.setPower(-rightWheels*powerfactor());
+            rr.setPower(-rightWheels*powerfactor());
             return true;
         }
         return false;
@@ -200,7 +217,20 @@ public abstract class RobotMain19888 extends LinearOpMode {
         }
     }
 
-    public void TeleClaw() {}
+    public void TeleClaw() {
+        //position 0 is the grab function
+        // position 1 or -1 is the release?
+
+        //make a toggle
+        if (gamepad1.x){
+            leftHand.setPosition(0);
+            rightHand.setPosition(0);
+        }
+        if (gamepad1.b){
+            leftHand.setPosition(-1);
+            rightHand.setPosition(-1);
+        }
+    }
 
 //    public void TeleDiagonal() {
 //        double x = gamepad1.right_stick_x, y = -gamepad1.right_stick_y;
@@ -217,28 +247,6 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
     /*================TeleOp code for test chassis (omni wheels)================*/
 
-
-
-    public boolean TestStraight() {
-//        lf.setPower(-gamepad1.left_stick_y);
-//        rf.setPower(-gamepad1.left_stick_y);
-        if (gamepad1.left_stick_y > 0.25 || gamepad1.left_stick_y < -0.25) {
-            lr.setPower(-gamepad1.left_stick_y);
-            rr.setPower(-gamepad1.left_stick_y);
-            return true;
-        }
-        return false;
-    }
-
-    public void TestStrafe() {
-        mid.setPower(gamepad1.left_stick_x);
-    }
-
-    public void TestTurn() {
-
-        lr.setPower(gamepad1.right_stick_x);;
-        rr.setPower(-gamepad1.right_stick_x);
-    }
 
 
 }
