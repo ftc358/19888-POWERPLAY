@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-import java.lang.Thread;
 /*
 
 This is the code for the Autonomous Period
@@ -19,7 +15,7 @@ Most of the code is not complete yet.
  */
 
 @Autonomous
-public class AutoMain19888 extends RobotMain19888 {
+public class AutoMain19888TurnRight extends RobotMain19888 {
 
     private boolean done = false;
     OpenCvCamera camera;
@@ -72,14 +68,12 @@ public class AutoMain19888 extends RobotMain19888 {
         //------------------------------------------------PROGRAM STARTS HERE------------------------------------------------
 
         while (opModeIsActive() && !done) {
-            telemetry.addData("###############", null);
-            telemetry.addData("I have Control", null);
-            telemetry.addData("###############", null);
+            telemetry.addData("Program Started", null);
             telemetry.update();
             double power_value=0.5;
             //Drive
             MoveStraight(6,power_value);
-            Turn(100,power_value);
+            Turn(-120,power_value);
             MoveStraight(35,power_value);
 
             done = true;
@@ -122,12 +116,6 @@ public class AutoMain19888 extends RobotMain19888 {
             }
             done = true;
             */
-        }
-        if (done){
-            telemetry.addData("###############", null);
-            telemetry.addData("Mission CMPL.", null);
-            telemetry.addData("###############", null);
-            telemetry.update();
         }
     }
 }

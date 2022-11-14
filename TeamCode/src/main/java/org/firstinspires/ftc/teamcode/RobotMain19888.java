@@ -231,6 +231,6 @@ public abstract class RobotMain19888 extends LinearOpMode {
             rightHand.setPosition(0.6);
         }
     }
-    
+
 
 }
