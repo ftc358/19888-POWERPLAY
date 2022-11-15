@@ -108,8 +108,8 @@ public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
     // These variable are declared here (as class members) so they can be updated in various methods,
     // but still be displayed by sendTelemetry()
     private double  targetHeading = 0;
-    private double  driveSpeed    = 0.5;
-    private double  turnSpeed     = 0.5;
+    private double  driveSpeed    = 0;
+    private double  turnSpeed     = 0;
     private double  leftSpeed     = 0;
     private double  rightSpeed    = 0;
     private int     leftFrontTarget    = 0;
@@ -123,8 +123,8 @@ public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
     // For example, use a value of 2.0 for a 12-tooth spur gear driving a 24-tooth spur gear.
     // This is gearing DOWN for less speed and more torque.
     // For gearing UP, use a gear ratio less than 1.0. Note this will affect the direction of wheel rotation.
-    static final double     COUNTS_PER_MOTOR_REV    = 537.7 ;   // eg: GoBILDA 312 RPM Yellow Jacket
-    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // No External Gearing.
+    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;   // eg: GoBILDA 312 RPM Yellow Jacket
+    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -147,10 +147,10 @@ public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_F_drive");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "left_B_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_F_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_B_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "lf");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "lr");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rf");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "rr");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -179,6 +179,8 @@ public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
 
 
         // Wait for the game to start (Display Gyro value while waiting)
+
+        //
         while (opModeInInit()) {
             telemetry.addData(">", "Robot Heading = %4.0f", getRawHeading());
             telemetry.update();
@@ -197,21 +199,24 @@ public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
+        //test code below
         driveStraight(DRIVE_SPEED, 24.0, 0.0);    // Drive Forward 24"
         turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
         holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
+        turnToHeading( TURN_SPEED, 135.0);
 
-        driveStraight(DRIVE_SPEED, 17.0, -45.0);  // Drive Forward 17" at -45 degrees (12"x and 12"y)
-        turnToHeading( TURN_SPEED,  45.0);               // Turn  CCW  to  45 Degrees
-        holdHeading( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
 
-        driveStraight(DRIVE_SPEED, 17.0, 45.0);  // Drive Forward 17" at 45 degrees (-12"x and 12"y)
-        turnToHeading( TURN_SPEED,   0.0);               // Turn  CW  to 0 Degrees
-        holdHeading( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for 1 second
+//        driveStraight(DRIVE_SPEED, 17.0, -45.0);  // Drive Forward 17" at -45 degrees (12"x and 12"y)
+//        turnToHeading( TURN_SPEED,  45.0);               // Turn  CCW  to  45 Degrees
+//        holdHeading( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
+//
+//        driveStraight(DRIVE_SPEED, 17.0, 45.0);  // Drive Forward 17" at 45 degrees (-12"x and 12"y)
+//        turnToHeading( TURN_SPEED,   0.0);               // Turn  CW  to 0 Degrees
+//        holdHeading( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for 1 second
+//
+//        driveStraight(DRIVE_SPEED,-48.0, 0.0);    // Drive in Reverse 48" (should return to approx. staring position)
 
-        driveStraight(DRIVE_SPEED,-48.0, 0.0);    // Drive in Reverse 48" (should return to approx. staring position)
-
-        telemetry.addData("Path", "Complete");
+        telemetry.addData("Mission CPML.", " ");
         telemetry.update();
         sleep(1000);  // Pause to display last telemetry message.
     }
