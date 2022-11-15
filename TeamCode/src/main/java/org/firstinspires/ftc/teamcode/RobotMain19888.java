@@ -39,6 +39,9 @@ public abstract class RobotMain19888 extends LinearOpMode {
 
         lf.setDirection(DcMotor.Direction.REVERSE);
         lr.setDirection(DcMotor.Direction.REVERSE);
+        rf.setDirection(DcMotor.Direction.FORWARD);
+        rr.setDirection(DcMotor.Direction.FORWARD);
+
         slideRight.setDirection(DcMotor.Direction.REVERSE);
 
 //        leftHand.setPosition(0);
