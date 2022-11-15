@@ -2,10 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 /*
 
 This is the code for the Autonomous Period
@@ -18,8 +14,6 @@ Most of the code is not complete yet.
 public class AutoMain19888TurnRight extends RobotMain19888 {
 
     private boolean done = false;
-    OpenCvCamera camera;
-    SleeveDetection sleeveDetection = new SleeveDetection();
 
     public void runOpMode() throws InterruptedException {
 
@@ -27,43 +21,6 @@ public class AutoMain19888TurnRight extends RobotMain19888 {
 
         //-----------------------------------------------SLEEVE DETECTION-----------------------------------------------
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-
-
-        sleeveDetection = new SleeveDetection();
-        camera.setPipeline(sleeveDetection);
-
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-                camera.startStreaming(320,240, OpenCvCameraRotation.UPSIDE_DOWN);
-            }
-
-            @Override
-            public void onError(int errorCode) {}
-        });
-        int park_ = 0;
-        while (!isStarted()) {
-            SleeveDetection.ParkingPosition parking_=sleeveDetection.getPosition();
-            telemetry.addData("ROTATION: ", parking_);
-            switch(parking_) {
-                case LEFT:
-                    park_=1;
-                    break;
-                case CENTER:
-                    park_=2;
-                    break;
-                case RIGHT:
-                    park_=3;
-                    break;
-            }
-            telemetry.update();
-        }
-
-        waitForStart();
 
         //------------------------------------------------PROGRAM STARTS HERE------------------------------------------------
 
