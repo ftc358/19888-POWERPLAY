@@ -146,20 +146,17 @@ public abstract class RobotMain19888 extends LinearOpMode {
         }
     }
 
-    public void Claw(double leftHand, double rightHand) {
+    public void autoClaw(int toggle) {
         //(leftHand, rightHand) = grab(0.4, 0.6) or release(0.6, 0.4)
-        Servo.
-
-
-
-        if (gamepad1.x){
+        //toggle: 0 = grab, 1 = release
+        if (toggle == 0) { //grab
+            leftHand.setPosition(0.4);
+            rightHand.setPosition(0.6);
+        } else if (toggle == 1) { //release
             leftHand.setPosition(0.6);
             rightHand.setPosition(0.4);
         }
-        if (gamepad1.b){
-            leftHand.setPosition(0.4);
-            rightHand.setPosition(0.6);
-        }
+    }
 
 
     /*============================TeleOp Code================================*/

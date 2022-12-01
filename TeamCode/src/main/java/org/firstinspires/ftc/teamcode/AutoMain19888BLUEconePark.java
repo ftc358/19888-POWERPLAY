@@ -16,8 +16,21 @@ public class AutoMain19888BLUEconePark extends RobotMain19888 {
             Thread.sleep(500);
             MoveStraight(9, power_value); //the exact length calculated = 9.09556
             SlideOP(1, 0.7);
-            //claw???(); -> after function is completed
+            autoClaw(1);
             //Park
+            Turn(45, power_value);
+            Thread.sleep(500);
+            MoveStraight(24, power_value);
+            Turn(90, power_value);
+            Thread.sleep(500);
+            MoveStraight(29, power_value); //might need to adjust to 28 if robot crashes to the walls
+
+            //if strafe function works this code can be used b/c faster & less complicated
+//            //Park
+//            Turn(45, power_value);
+//            Thread.sleep(500);
+//            MoveStraight(24, power_value);
+//            Strafe(29, power_value);
 
             done = true;
         }
